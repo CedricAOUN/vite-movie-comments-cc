@@ -8,11 +8,11 @@ import { addComment } from '../../redux/commentSlice';
 const schema = yup.object().shape({
   message: yup
     .string()
-    .required('Votre message est vide!')
+    .required('Le commentaire est obligatoire')
     .max(500, 'Votre message ne doit pas depasser 500 char.'),
   rating: yup
     .string()
-    .oneOf(['1', '2', '3', '4', '5'], 'Veuillez sélectionner une note valide'),
+    .oneOf(['1', '2', '3', '4', '5'], 'Veuillez sélectionner une note'),
   acceptConditions: yup
     .boolean()
     .oneOf([true], 'Vous devez accepter les conditions générales'),
@@ -47,12 +47,20 @@ function CommentForm() {
       <h3>Commentaires</h3>
       <Form.Group className='mb-3' controlId='message'>
         <Form.Label>Ajouter un commentaire</Form.Label>
-        <Form.Control type='text' as='textarea' rows={3} {...register('message')} className={errors?.message && 'border-danger'} />
-        <p className='text-danger'>{errors?.message?.message}</p>
+        <Form.Control 
+          type='text' 
+          as='textarea' 
+          rows={3} 
+          {...register('message')} 
+          isInvalid={!!errors?.message} 
+        />
+        <Form.Control.Feedback type='invalid'>
+          {errors?.message?.message}
+        </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group className='my-3' controlId='rating' >
+      <Form.Group className='my-3' controlId='rating'>
         <Form.Label>Note</Form.Label>
-        <Form.Select {...register('rating')} className={errors?.rating && 'border-danger'}>
+        <Form.Select {...register('rating')} isInvalid={!!errors?.rating}>
           <option value='Selectionnez une note' disabled>Selectionnez une note</option>
           <option value='1'>1</option>
           <option value='2'>2</option>
@@ -60,14 +68,20 @@ function CommentForm() {
           <option value='4'>4</option>
           <option value='5'>5</option>
         </Form.Select>
-        <p className='text-danger'>{errors?.rating?.message}</p>
+        <Form.Control.Feedback type='invalid'>
+          {errors?.rating?.message}
+        </Form.Control.Feedback>
       </Form.Group>
-      <Form.Group
-        className='my-3'
-        controlId='acceptConditions'
-      >
-        <Form.Check type='checkbox' label="J'accepte les conditions générales" {...register('acceptConditions')} className={errors?.acceptConditions && 'text-danger'} />
-        <p className='text-danger'>{errors?.acceptConditions?.message}</p>
+      <Form.Group className='my-3' controlId='acceptConditions'>
+        <Form.Check 
+          type='checkbox' 
+          label="J'accepte les conditions générales" 
+          {...register('acceptConditions')} 
+          isInvalid={!!errors?.acceptConditions} 
+        />
+        <Form.Control.Feedback type='invalid'>
+          {errors?.acceptConditions?.message}
+        </Form.Control.Feedback>
       </Form.Group>
       <Button variant='primary' type='submit'>
         Ajouter
