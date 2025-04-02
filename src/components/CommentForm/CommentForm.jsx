@@ -47,12 +47,12 @@ function CommentForm() {
       <h3>Commentaires</h3>
       <Form.Group className='mb-3' controlId='message'>
         <Form.Label>Ajouter un commentaire</Form.Label>
-        <Form.Control type='text' as='textarea' rows={3} {...register('message')} />
+        <Form.Control type='text' as='textarea' rows={3} {...register('message')} className={errors?.message && 'border-danger'} />
         <p className='text-danger'>{errors?.message?.message}</p>
       </Form.Group>
       <Form.Group className='my-3' controlId='rating' >
         <Form.Label>Note</Form.Label>
-        <Form.Select {...register('rating')} >
+        <Form.Select {...register('rating')} className={errors?.rating && 'border-danger'}>
           <option value='Selectionnez une note' disabled>Selectionnez une note</option>
           <option value='1'>1</option>
           <option value='2'>2</option>
@@ -66,11 +66,11 @@ function CommentForm() {
         className='my-3'
         controlId='acceptConditions'
       >
-        <Form.Check type='checkbox' label='Accepter les conditions générales' {...register('acceptConditions')}/>
+        <Form.Check type='checkbox' label="J'accepte les conditions générales" {...register('acceptConditions')} className={errors?.acceptConditions && 'text-danger'} />
         <p className='text-danger'>{errors?.acceptConditions?.message}</p>
       </Form.Group>
       <Button variant='primary' type='submit'>
-        Add comment
+        Ajouter
       </Button>
     </Form>
   );

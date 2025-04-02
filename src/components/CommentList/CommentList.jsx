@@ -1,12 +1,17 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { selectComments } from '../../redux/selectors';
+import Comment from '../Comment/Comment';
 
 function CommentList() {
-  const dispatch = useDispatch();
+  const comments = useSelector(selectComments);
 
+  if(comments.length == 0) return <div className='alert alert-primary mt-3' role="alert">Aucun commentaire pour le moment.</div>
 
   return (
-    <div>CommentList</div>
+    <>
+      {comments.map((comment) => <Comment id={comment.id} message={comment.message} rating={comment.rating} />)}
+    </>
   )
 }
 
