@@ -17,13 +17,15 @@ function App() {
       if(!response.ok) {
         throw new Error(`HTTP Error: ${response.status} with message: ${response.statusText}`);
       }
+
       const data = await response.json();
       setRandomMovie(data);
-      setIsLoading(false);
     } catch (err) {
       setErrorMsg('An error occured while choosing a random movie');
       console.error(err);
-    } 
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {

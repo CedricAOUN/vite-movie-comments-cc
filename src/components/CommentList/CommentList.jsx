@@ -10,7 +10,7 @@ function CommentList() {
 
   return (
     <>
-      {comments.map((comment) => <Comment id={comment.id} message={comment.message} rating={comment.rating} />)}
+      {comments.map((comment) => <Comment key={comment.id} id={comment.id} message={comment.message} rating={comment.rating} />)}
     </>
   )
 }

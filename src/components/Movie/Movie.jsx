@@ -12,18 +12,12 @@ function Movie({ movie }) {
     release_date = '',
   } = movie || {};
 
-  const formatDate = () => {
-    const dateOnly = release_date.split(",")[1].trim();
-    const [month, day, year] = dateOnly.split("/");
-    return `${day}/${month}/${year}`
-  }
-
   return (
     <Card id={movie_id}>
-      <Card.Img variant="top" src={poster_path}/>
+      <Card.Img variant="top" src={poster_path} />
       <Card.Body>
         <Card.Title>{original_title}</Card.Title>
-        <Card.Subtitle className="text-muted">Sortie le {formatDate()}</Card.Subtitle>
+        <Card.Subtitle className="text-muted">Sortie le {new Date(release_date).toLocaleDateString('fr-FR')}</Card.Subtitle>
         <Card.Text className="py-2">
           {overview}
         </Card.Text>

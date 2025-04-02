@@ -5,6 +5,13 @@ import { Form, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { addComment } from '../../redux/commentSlice';
 
+const optionAmount = 5;
+let options = []
+
+for(let i = 0; i < optionAmount; i++) {
+  options.push((i + 1).toString());
+}
+
 const schema = yup.object().shape({
   message: yup
     .string()
@@ -12,7 +19,7 @@ const schema = yup.object().shape({
     .max(500, 'Votre message ne doit pas depasser 500 char.'),
   rating: yup
     .string()
-    .oneOf(['1', '2', '3', '4', '5'], 'Veuillez sélectionner une note'),
+    .oneOf(options, 'Veuillez sélectionner une note'),
   acceptConditions: yup
     .boolean()
     .oneOf([true], 'Vous devez accepter les conditions générales'),
@@ -62,11 +69,7 @@ function CommentForm() {
         <Form.Label>Note</Form.Label>
         <Form.Select {...register('rating')} isInvalid={!!errors?.rating}>
           <option value='Selectionnez une note' disabled>Selectionnez une note</option>
-          <option value='1'>1</option>
-          <option value='2'>2</option>
-          <option value='3'>3</option>
-          <option value='4'>4</option>
-          <option value='5'>5</option>
+          {options.map((option) => <option value={option} key={option}>{option}</option>)}
         </Form.Select>
         <Form.Control.Feedback type='invalid'>
           {errors?.rating?.message}
